@@ -1,6 +1,17 @@
 # ANACITY Facility Usage Prediction System
 
+[![Open In Colab](https://img.shields.io/badge/Google%20Colab-Run%20Instantly-orange?style=for-the-badge&logo=googlecolab)](https://colab.research.google.com/github/jaiswalwrites/community-facility-usage-prediction-system/blob/main/Facility_Usage_Prediction_System.ipynb)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue?style=for-the-badge&logo=github)](https://github.com/jaiswalwrites/community-facility-usage-prediction-system)
+
 A machine learning solution for predicting residential community amenity usage, optimal booking day/time, and intelligent notification push timing (nudges), built according to the **ANACITY / ANAROCK** technical assignment specification.
+
+---
+
+## ⚡ 1-Click Instant Online Execution (No Setup Needed!)
+
+You can run the entire synthetic data generation, ML training, evaluation, and review table formatting directly in your browser with **zero installation or cloning**:
+
+👉 **[Click Here to Run on Google Colab](https://colab.research.google.com/github/jaiswalwrites/community-facility-usage-prediction-system/blob/main/Facility_Usage_Prediction_System.ipynb)**
 
 ---
 
@@ -28,7 +39,8 @@ A machine learning solution for predicting residential community amenity usage, 
 ## 📁 Repository Structure
 
 ```
-facility-usage-prediction-system/
+community-facility-usage-prediction-system/
+├── Facility_Usage_Prediction_System.ipynb # 🚀 1-Click Google Colab Notebook
 ├── data/
 │   ├── raw_bookings.csv          # Generated synthetic booking dataset (10,233 records)
 │   ├── train_bookings.csv        # Chronological train split (7,994 records)
@@ -49,34 +61,6 @@ facility-usage-prediction-system/
 ├── requirements.txt              # Dependencies (pandas, scikit-learn, numpy)
 ├── TECHNICAL_DOCUMENTATION.md    # In-depth technical report
 └── README.md                     # Quickstart guide
-```
-
----
-
-## 🚀 Quickstart Guide
-
-### 1. Install Dependencies
-Ensure Python 3.9+ is installed, then run:
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Run the End-to-End Workflow
-To generate the synthetic dataset, extract leakage-safe features, train the multi-output models, evaluate on unseen holdout test data, and produce the prediction review files, execute:
-```bash
-python main.py
-```
-
-### 3. Open the Interactive Web Dashboard
-Open `web/index.html` in any web browser to view the interactive Prediction Review Dashboard, test live predictions for any resident, and export the review table as a CSV.
-
-```bash
-# Option A: Open directly in browser
-double-click web/index.html
-
-# Option B: Run via lightweight local server
-python -m http.server 8000 --directory web
-# Then visit http://localhost:8000 in your browser
 ```
 
 ---
