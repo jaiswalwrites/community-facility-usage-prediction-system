@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANACITY - Facility Usage Prediction System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo-badge">
+          <span class="logo-icon">🔮</span>
+          <div class="logo-text">
+            <span class="brand">ANACITY</span>
+            <span class="sub-brand">Powering Smarter Communities</span>
+          </div>
+        </div>
+        <h1>Facility Usage Prediction System</h1>
+      </div>
+      <div class="header-right">
+        <span class="status-chip chip-live">● System Live</span>
+        <span class="version-chip">v1.0 ML Pipeline</span>
+      </div>
+    </header>
+
+    <!-- KPI Summary Grid -->
+    <section class="kpi-grid">
+      <div class="kpi-card highlight">
+        <div class="kpi-icon">🎯</div>
+        <div class="kpi-content">
+          <div class="kpi-label">Exact 4/4 Match Rate</div>
+          <div class="kpi-value" id="kpi-exact-match">--%</div>
+          <div class="kpi-subtext">All 4 target outputs correct</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">🏋️</div>
+        <div class="kpi-content">
+          <div class="kpi-label">Facility Accuracy</div>
+          <div class="kpi-value" id="kpi-facility-acc">--%</div>
+          <div class="kpi-subtext">Predicting correct amenity</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">📅</div>
+        <div class="kpi-content">
+          <div class="kpi-label">Usage Day Accuracy</div>
+          <div class="kpi-value" id="kpi-day-acc">--%</div>
+          <div class="kpi-subtext">Predicting correct day of week</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">⏰</div>
+        <div class="kpi-content">
+          <div class="kpi-label">Usage Hour Accuracy</div>
+          <div class="kpi-value" id="kpi-hour-acc">--%</div>
+          <div class="kpi-subtext">Within ±1 hour window</div>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon">🔔</div>
+        <div class="kpi-content">
+          <div class="kpi-label">Nudge Time MAE</div>
+          <div class="kpi-value" id="kpi-nudge-mae">-- hrs</div>
+          <div class="kpi-subtext">Notification time lead error</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Live Prediction Tool -->
+    <section class="simulator-card">
+      <div class="card-header">
+        <h2>⚡ Resident Next Booking & Notification Predictor</h2>
+        <p>Select a resident to generate real-time AI predictions for their next facility usage and optimal notification time.</p>
+      </div>
+      <div class="simulator-body">
+        <div class="sim-controls">
+          <label for="resident-select">Select Resident Reference:</label>
+          <select id="resident-select" class="select-input">
+            <!-- Populated dynamically -->
+          </select>
+          <button id="btn-predict" class="btn-primary">Generate Live Prediction</button>
+        </div>
+        <div id="sim-result" class="sim-result-box hidden">
+          <div class="sim-result-grid">
+            <div class="sim-tile">
+              <span class="sim-tile-label">Predicted Facility</span>
+              <span class="sim-tile-value" id="sim-fac">Gym</span>
+            </div>
+            <div class="sim-tile">
+              <span class="sim-tile-label">Predicted Day</span>
+              <span class="sim-tile-value" id="sim-day">Friday</span>
+            </div>
+            <div class="sim-tile">
+              <span class="sim-tile-label">Predicted Time</span>
+              <span class="sim-tile-value" id="sim-time">07:00 AM</span>
+            </div>
+            <div class="sim-tile highlight-tile">
+              <span class="sim-tile-label">Optimal Nudge Notification</span>
+              <span class="sim-tile-value" id="sim-nudge">Thursday 18:15 PM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prediction Review Output Table -->
+    <section class="table-section">
+      <div class="table-toolbar">
+        <div class="toolbar-title">
+          <h2>📊 Prediction Review Table (Holdout Test Dataset)</h2>
+          <span class="records-count" id="records-count">Showing 0 records</span>
+        </div>
+        <div class="toolbar-filters">
+          <input type="text" id="search-input" class="search-input" placeholder="Search Resident ID (e.g. R-104)...">
+          <select id="filter-match" class="select-input">
+            <option value="ALL">All Matches</option>
+            <option value="EXACT">Exact Match (4 of 4)</option>
+            <option value="PARTIAL">Partial Match (2 or 3 of 4)</option>
+            <option value="MISS">Non-Match (0 or 1 of 4)</option>
+          </select>
+          <button id="btn-export-csv" class="btn-secondary">📥 Export CSV</button>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="review-table">
+          <thead>
+            <tr>
+              <th>REF / RESIDENT</th>
+              <th>PAST BOOKINGS (FACILITY / DAY / USE TIME)</th>
+              <th>PREDICTION (FACILITY / DAY / USE TIME / NUDGE TIME)</th>
+              <th>ACTUAL (FACILITY / DAY / USE TIME / BOOKED AT)</th>
+              <th>MATCH INDICATOR</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Dynamic Table Rows -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "total_test_records": 1999,
+  "facility_accuracy": 55.63,
+  "usage_day_accuracy": 73.14,
+  "usage_hour_accuracy": 54.08,
+  "nudge_time_accuracy": 31.12,
+  "nudge_time_mae_hours": 23.79,
+  "exact_4of4_match_rate": 13.26,
+  "match_distribution": {
+    "4_of_4": 265,
+    "3_of_4": 514,
+    "2_of_4": 627,
+    "1_of_4": 421,
+    "0_of_4": 172
+  }
+}
